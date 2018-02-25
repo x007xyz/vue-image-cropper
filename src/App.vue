@@ -1,29 +1,30 @@
 <template>
-  <div id="app">
+  <div>
     <h1>图像裁剪</h1>
     <button @click="getImage">图像裁剪</button>
     <image-cropper :callback="loadImage"></image-cropper>
-    <img src="" alt="" v-el:test>
+    <img src="" alt="" ref="test">
   </div>
 </template>
 
 <script>
 export default {
   components: {
-    ImageCropper: require('./components/ImageCropper')
+    ImageCropper: () => import('./components/ImageCropper')
   },
-  data () {
+  data() {
     return {
       show: false
     }
   },
   methods: {
-    getImage () {
-      this.$broadcast('showCropper')
+    getImage() {
+      this.$children[0].showCropper()
+      // this.$broadcast('showCropper')
     },
-    loadImage (data) {
+    loadImage(data) {
       console.log(data)
-      this.$els.test.src = data
+      this.$refs.test.src = data
     }
   }
 }
